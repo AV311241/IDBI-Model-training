@@ -168,6 +168,7 @@ def _predict_single(app_request: LoanApplicationRequest) -> dict:
     scaled_df    = pd.DataFrame(scaled_array, columns=features)
 
     # 3. Predict
+    #"What is the probability that this borrower will DEFAULT (fail to repay)?"
     prediction   = int(model.predict(scaled_array)[0])
     probabilities= model.predict_proba(scaled_array)[0]
     default_prob = round(float(probabilities[1]), 4)
@@ -214,6 +215,14 @@ def _predict_single(app_request: LoanApplicationRequest) -> dict:
         "model_name"          : meta["model_name"],
         "model_auc"           : meta["auc_roc"],
     }
+
+
+
+
+
+@app.get("/")
+async def home():
+    return {"status": "success", "message": "Model is deployed successfully"}    
 
 
 # ============================================================
@@ -305,6 +314,7 @@ async def predict_loan(application: LoanApplicationRequest):
 # ============================================================
 # ROUTE 3: Batch Prediction
 # ============================================================
+
 
 @app.post(
     "/predict/batch",

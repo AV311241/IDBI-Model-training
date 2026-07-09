@@ -1,2 +1,7 @@
 venv/
 .venv/
+
+msme_loan_api/
+    test.ipynb
+    Dockerfile
+    docker-compose.yml
